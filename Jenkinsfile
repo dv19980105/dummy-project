@@ -1,9 +1,6 @@
 pipeline {
     agent any
-stages {
-        stage('Example Stage') {
-            steps {
-                echo 'This is a placeholder stage.'
+
     environment {
         REGISTRY = "k3d-registry.localhost:5000"   // or DockerHub username
         IMAGE_NAME = "dummy-webapp"
