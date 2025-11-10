@@ -31,13 +31,14 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-            steps {
-                echo "Deploying to Kubernetes..."
-                sh """
-                kubectl set image deployment/${DEPLOYMENT_NAME} ${IMAGE_NAME}=${REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} --kubeconfig=${KUBE_CONFIG} || true
-                kubectl apply -f k8s/ --kubeconfig=${KUBE_CONFIG}
-                kubectl rollout status deployment/${DEPLOYMENT_NAME} --kubeconfig=${KUBE_CONFIG}
-                """
+    steps {
+        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')]) {
+            sh 'kubectl --kubeconfig=$KUBE_CONFIG apply -f k8s/deployment.yaml'
+        }
+    }
+}
+
+
             }
         }
     }
