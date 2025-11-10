@@ -5,7 +5,6 @@ pipeline {
         REGISTRY = "k3d-registry.localhost:5000"   // or DockerHub username
         IMAGE_NAME = "dummy-webapp"
         DEPLOYMENT_NAME = "dummy-deployment"
-        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
@@ -33,7 +32,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying to Kubernetes..."
-                sh "kubectl --kubeconfig=${KUBECONFIG} apply -f k8s/deployment.yaml"
+                // Use kubeconfig stored as Jenkins secret file
+                withCredentials([file(credentialsId: 'jenkins-kubeconfig', variable: 'KUBECONFIG')]) {
+                    sh "kubectl apply -f k8s/deployment.yaml"
+                }
             }
         }
     }
