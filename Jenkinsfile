@@ -15,7 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-
+    }
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
@@ -32,11 +32,7 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
     steps {
-        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBE_CONFIG')]) {
-            sh 'kubectl --kubeconfig=$KUBE_CONFIG apply -f k8s/deployment.yaml'
-        }
-    }
-}
+        sh 'kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f k8s/deployment.yaml'
 
           }
     }    
@@ -49,4 +45,4 @@ pipeline {
             echo "❌ Deployment failed."
         }
     }
-
+}
