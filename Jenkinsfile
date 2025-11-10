@@ -38,10 +38,8 @@ pipeline {
     }
 }
 
-
-            }
-        }
-    }
+          }
+    }    
 
     post {
         success {
