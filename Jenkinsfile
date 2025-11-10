@@ -15,7 +15,7 @@ pipeline {
                 checkout scm
             }
         }
-    }
+
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
@@ -33,12 +33,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying to Kubernetes..."
-                sh """
-                'kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f k8s/deployment.yaml'
-                """
+                sh "kubectl --kubeconfig=${KUBECONFIG} apply -f k8s/deployment.yaml"
             }
         }
-
+    }
 
     post {
         success {
