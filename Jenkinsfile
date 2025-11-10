@@ -31,11 +31,14 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-    steps {
-        sh 'kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f k8s/deployment.yaml'
+            steps {
+                echo "Deploying to Kubernetes..."
+                sh """
+                'kubectl --kubeconfig=/home/ubuntu/.kube/config apply -f k8s/deployment.yaml'
+                """
+            }
+        }
 
-          }
-    }    
 
     post {
         success {
