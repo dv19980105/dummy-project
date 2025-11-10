@@ -5,7 +5,7 @@ pipeline {
         REGISTRY = "k3d-registry.localhost:5000"   // or DockerHub username
         IMAGE_NAME = "dummy-webapp"
         DEPLOYMENT_NAME = "dummy-deployment"
-        KUBE_CONFIG = "$HOME/.kube/config"
+        KUBECONFIG = "/var/lib/jenkins/.kube/config"
     }
 
     stages {
