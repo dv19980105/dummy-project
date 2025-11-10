@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo "Deploying to Kubernetes..."
                 // Use kubeconfig stored as Jenkins secret file
-                withCredentials([file(credentialsId: 'jenkins-kubeconfig', variable: 'KUBECONFIG')]) {
+                withCredentials([file(credentialsId: 'Jenkins.kubeconfig', variable: 'KUBECONFIG')]) {
                     sh "kubectl apply -f k8s/deployment.yaml"
                 }
             }
